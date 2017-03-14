@@ -1,0 +1,23 @@
+{
+  "name": "smalot/vagrant-rest-bundle",
+  "description": "Vagrant Rest Bundle.",
+  "keywords": ["vagrant", "rest", "bundle"],
+  "type": "library",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Sebastien Malot",
+      "email": "smalot@actualys.com"
+    }
+  ],
+  "require": {
+    "smalot/vagrant-wrapper": "dev-master"
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "autoload": {
+    "psr-4": {
+      "Smalot\\Vagrant\\RestBundle\\": "src/"
+    }
+  }
+}

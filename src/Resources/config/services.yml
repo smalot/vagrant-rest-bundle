@@ -1,0 +1,4 @@
+services:
+#    smalot_vagrant_rest.example:
+#        class: Smalot\Vagrant\RestBundle\Example
+#        arguments: ["@service_id", "plain_value", "%parameter%"]
