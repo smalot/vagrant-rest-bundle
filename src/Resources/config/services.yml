@@ -1,4 +1,8 @@
+parameters:
+    vagrant_rest.response_listener.class:     Smalot\Vagrant\RestBundle\EventListener\ResponseListener
+
 services:
-#    smalot_vagrant_rest.example:
-#        class: Smalot\Vagrant\RestBundle\Example
-#        arguments: ["@service_id", "plain_value", "%parameter%"]
+    vagrant_rest.response_listener:
+        class: "%vagrant_rest.response_listener.class%"
+        tags:
+            - { name: kernel.event_subscriber }
