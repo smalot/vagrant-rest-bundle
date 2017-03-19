@@ -1,7 +1,11 @@
 parameters:
+    vagrant_rest.model.system.class:          Smalot\Vagrant\RestBundle\Model\System
     vagrant_rest.response_listener.class:     Smalot\Vagrant\RestBundle\EventListener\ResponseListener
 
 services:
+    vagrant_rest.model.system:
+        class : "%vagrant_rest.model.system.class%"
+
     vagrant_rest.response_listener:
         class: "%vagrant_rest.response_listener.class%"
         tags:

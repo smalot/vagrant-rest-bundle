@@ -5,6 +5,7 @@ namespace Smalot\Vagrant\RestBundle\EventListener;
 use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
+use Symfony\Component\HttpKernel\Event\PostResponseEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
 /**
@@ -20,7 +21,7 @@ class ResponseListener implements EventSubscriberInterface
     {
         $response = $event->getResponse();
 
-        if (!$response->headers->has('Content-Encoding')) {
+        if (!$response->headers->has('Content-Encoding') && $response->headers->get('Content-Type') == 'application/json') {
             $content = $response->getContent();
 
             $request = $event->getRequest();
@@ -36,13 +37,19 @@ class ResponseListener implements EventSubscriberInterface
         }
     }
 
-    public function onKernelTerminate(Event $event)
+    /**
+     * @param PostResponseEvent $event
+     */
+    public function onKernelTerminate(PostResponseEvent $event)
     {
-        echo '';
+        $response = $event->getResponse();
 
-        flush();            // Unless both are called !
-        if (session_id()) {
-            session_write_close();
+        if ($response->headers->get('Content-Type') == 'application/json') {
+            flush();
+
+            if (session_id()) {
+                session_write_close();
+            }
         }
     }
 
@@ -53,7 +60,7 @@ class ResponseListener implements EventSubscriberInterface
     {
         return array(
           KernelEvents::RESPONSE => array('onKernelResponse', 20),
-          KernelEvents::TERMINATE => array('onKernelTerminate', 20),
+          KernelEvents::TERMINATE => array('onKernelTerminate', 100),
         );
     }
 }

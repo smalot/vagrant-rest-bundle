@@ -7,6 +7,7 @@ use FOS\RestBundle\Controller\Annotations\View;
 use FOS\RestBundle\Controller\Annotations\Route;
 use FOS\RestBundle\Controller\Annotations\Get;
 use FOS\RestBundle\Controller\Annotations\Post;
+use Smalot\Vagrant\RestBundle\Model\System;
 use Smalot\Vagrant\Wrapper\Vagrant;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\Process\Process;
@@ -46,6 +47,23 @@ class MachineController extends FOSRestController
         $status = $this->vagrant->getGlobalStatus();
 
         return array_values($status);
+    }
+
+    /**
+     * @View()
+     * @Get("/info")
+     */
+    public function infoAction()
+    {
+        $info = [];
+
+        /** @var System $system */
+        $system = $this->get('vagrant_rest.model.system');
+
+        $info += $system->getMemory();
+        $info += $system->getCpu();
+
+        return $info;
     }
 
     /**
