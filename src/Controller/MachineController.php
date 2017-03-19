@@ -51,23 +51,6 @@ class MachineController extends FOSRestController
 
     /**
      * @View()
-     * @Get("/info")
-     */
-    public function infoAction()
-    {
-        $info = [];
-
-        /** @var System $system */
-        $system = $this->get('vagrant_rest.model.system');
-
-        $info += $system->getMemory();
-        $info += $system->getCpu();
-
-        return $info;
-    }
-
-    /**
-     * @View()
      * @Get("/up")
      */
     public function runAction()
